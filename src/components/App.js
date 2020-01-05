@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import WorldMap from "./WorldMap";
 
 function App() {
+  // TODO: encapsulate
+  const [visitedPlaces, setVisitedPlaces] = useState(["UA"]);
+  const triggerPlace = code => {
+    if (visitedPlaces.includes(code)) {
+      setVisitedPlaces([...visitedPlaces.filter(place => place !== code)]);
+    } else setVisitedPlaces([...visitedPlaces, code]);
+  };
   return (
     <div className="App">
       <header className="App-header">
         <h1>Scratch Map</h1>
       </header>
       <main>
-        <pinch-zoom className="my-pinch-zoom">
-          <WorldMap />
-        </pinch-zoom>
+        <div>
+          <WorldMap visitedPlaces={visitedPlaces} triggerPlace={triggerPlace} />
+        </div>
       </main>
-      <script>
-        const pinchZoom = document.querySelector('.my-pinch-zoom');
-      </script>
     </div>
   );
 }
